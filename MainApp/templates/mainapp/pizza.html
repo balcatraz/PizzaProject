@@ -1,0 +1,42 @@
+{% extends 'MainApp/base.html' %}
+
+
+{% block content %}
+
+<p>
+    Pizza: {{ pizza }}
+</p>
+
+<ul>
+    {% for t in toppings %}
+
+    <li>
+        <p>{{ t.topping_name }}</p>
+    </li>
+    {% empty %}
+    <li>
+        There are no toppings for this pizza.
+    </li>
+    {% endfor %}
+</ul>
+
+<ul>
+    {% for c in comments %}
+
+    <li>
+        <p>{{c.text}}</p>
+        <p>{{c.date_added}} by {{c.owner}}</p>
+        <p><a href="{% url 'MainApp:edit_comment' c.id %}">Edit Comment</a></p>
+    </li>
+
+    {% empty %}
+    <li>
+        There are no toppings for this pizza.
+    </li>
+    {% endfor %}
+
+</ul>
+
+<p><a href="{% url 'MainApp:new_comment' pizza.id %}">Add New Comment</a></p>
+
+{% endblock content %}
