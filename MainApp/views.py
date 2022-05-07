@@ -23,7 +23,7 @@ def pizzas(request):
 def pizza(request, pizza_id):
     pizza = Pizza.objects.get(id=pizza_id)
     comments = pizza.comment_set.order_by("-date_added")
-    toppings = pizza.topping_set.order_by("-text")
+    toppings = pizza.topping_set.order_by("-toppings_name")
 
     context = {"pizza": pizza, "toppings": toppings, "comments": comments}
 

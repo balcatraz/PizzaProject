@@ -3,15 +3,15 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Pizza(models.Model):
-    text = models.CharField(max_length=200)
+    pizza_name = models.CharField(max_length=200)
 
     def __str__(self):
-        return self.text
+        return self.pizza_name
 
 
 class Topping(models.Model):
     pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE)
-    text = models.CharField(max_length=200)
+    toppings_name = models.CharField(max_length=200)
 
 
 class Comment(models.Model):

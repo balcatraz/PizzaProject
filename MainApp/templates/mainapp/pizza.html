@@ -4,7 +4,7 @@
 {% block content %}
 
 <p>
-    Pizza: {{ pizza }}
+    Pizza: {{ pizza.pizza_name }}
 </p>
 <p>
     Toppings:
@@ -14,7 +14,7 @@
     {% for t in toppings %}
 
     <li>
-        <p>{{ t.text }}</p>
+        <p>{{ t.toppings_name }}</p>
     </li>
     {% empty %}
     <li>
