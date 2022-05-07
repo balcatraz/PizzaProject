@@ -6,12 +6,15 @@
 <p>
     Pizza: {{ pizza }}
 </p>
+<p>
+    Toppings:
+</p>
 
 <ul>
     {% for t in toppings %}
 
     <li>
-        <p>{{ t.topping_name }}</p>
+        <p>{{ t.text }}</p>
     </li>
     {% empty %}
     <li>
@@ -19,6 +22,8 @@
     </li>
     {% endfor %}
 </ul>
+
+<p>Comments:</p>
 
 <ul>
     {% for c in comments %}
@@ -26,17 +31,19 @@
     <li>
         <p>{{c.text}}</p>
         <p>{{c.date_added}} by {{c.owner}}</p>
-        <p><a href="{% url 'MainApp:edit_comment' c.id %}">Edit Comment</a></p>
+        {% if c.owner == request.user %}
+        <p><a href="{% url 'edit_comment' c.id %}">Edit Comment</a></p>
+        {% endif %}
     </li>
 
     {% empty %}
     <li>
-        There are no toppings for this pizza.
+        There are no comments for this pizza.
     </li>
     {% endfor %}
 
 </ul>
 
-<p><a href="{% url 'MainApp:new_comment' pizza.id %}">Add New Comment</a></p>
+<p><a href="{% url 'new_comment' pizza.id %}">Add New Comment</a></p>
 
 {% endblock content %}

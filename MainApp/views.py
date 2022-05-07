@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 
-from .forms import CommentForm
-from .models import Pizza, Topping, Comment
+from MainApp.forms import CommentForm
+from MainApp.models import Pizza, Topping, Comment
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 
@@ -13,7 +13,7 @@ def index(request):
 
 
 def pizzas(request):
-    pizzas = Pizza.objects.filter(owner=request.user)
+    pizzas = Pizza.objects.filter()
 
     context = {"pizzas": pizzas}
 
@@ -22,8 +22,8 @@ def pizzas(request):
 
 def pizza(request, pizza_id):
     pizza = Pizza.objects.get(id=pizza_id)
-    comments = pizza.entry_set.order_by("-date_added")
-    toppings = pizza.entry_set.order_by("-topping_name")
+    comments = pizza.comment_set.order_by("-date_added")
+    toppings = pizza.topping_set.order_by("-text")
 
     context = {"pizza": pizza, "toppings": toppings, "comments": comments}
 
@@ -31,8 +31,8 @@ def pizza(request, pizza_id):
 
 
 @login_required
-def new_comment(request, topic_id):
-    pizza = Pizza.objects.get(id=topic_id)
+def new_comment(request, pizza_id):
+    pizza = Pizza.objects.get(id=pizza_id)
 
     if request.method != "POST":
         form = CommentForm()
@@ -42,8 +42,9 @@ def new_comment(request, topic_id):
         if form.is_valid():
             new_entry = form.save(commit=False)
             new_entry.pizza = pizza
+            new_entry.owner = request.user
             new_entry.save()
-            return redirect("MainApp:pizza", topic_id=topic_id)
+            return redirect("pizza", pizza_id=pizza_id)
 
     context = {"form": form, "pizza": pizza}
 
@@ -65,7 +66,7 @@ def edit_comment(request, comment_id):
 
         if form.is_valid():
             form.save()
-            return redirect("MainApp:pizza", pizza_id=pizza.id)
+            return redirect("pizza", pizza_id=pizza.id)
 
     context = {"form": form, "pizza": pizza, "comment": comment}
 

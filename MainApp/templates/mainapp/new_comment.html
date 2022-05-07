@@ -3,13 +3,13 @@
 
 {% block content %}
 
-<p><a href="{% url 'MainApp:pizza' pizza.id %}"> {{pizza}} </a></p>
+<p><a href="{% url 'pizza' pizza.id %}"> {{pizza}} </a></p>
 
 <p>
     Add a new comment:
 </p>
 
-<form action="{% url 'MainApp:new_comment' pizza.id %}" method="post">
+<form action="{% url 'new_comment' pizza.id %}" method="post">
 
     {% csrf_token %}
 

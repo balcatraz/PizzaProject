@@ -1,9 +1,14 @@
 {% extends "MainApp/base.html" %}
 
 
-{% block content %}
-
-<p>Welcome to our pizzeria. Enjoy our delectable pizzas!
-</p>
-
-{% endblock content %}
+{% block page_header %}
+<div class="jumbotron">
+    <h1 class="display-3">Look at our Pizzas!</h1>
+    <p class="lead">
+        With many options to choose from you can pick and comment on one our many desirable and delectable options!
+        We have many great selections of toppings and more. All available for you today! Register now to be able to
+        comment on our delicious options!
+    </p>
+    <a class="btn btn-lg btn-primary" href="{% url 'pizzas' %}" role="button">Pizzas &raquo;</a>
+</div>
+{% endblock page_header %}
